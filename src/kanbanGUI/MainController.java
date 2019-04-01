@@ -5,7 +5,6 @@ import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,17 +17,21 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class MainController {
     private static ObservableList<TaskModel> toDoElementsListModel = FXCollections.observableArrayList();
     private static Stage addElementStage;
     private static ListView<TaskModel> toDoElementsList;
     private static Scene addItemScene;
+    private static ContextMenu taskContextMenu;
+
+    public static int getIndexOfTaskCell() {
+        return indexOfTaskCell;
+    }
+
+    private static int indexOfTaskCell;
 
     @FXML
     public ListView<TaskModel> toDo_list;
@@ -66,24 +69,32 @@ public class MainController {
         addElementStage.initOwner(Main.getPrimaryStage());
         addElementStage.show();
         toDoElementsList = toDo_list;
+
+        taskContextMenu = TaskContextMenu.createContextMenu();
+
         toDoElementsList.setCellFactory(list -> {
             final ListCell<TaskModel> cell = new TaskCell();
             cell.setOnMouseEntered(event1 -> {
                 if(cell.getText() != null){
-                    Rectangle rect = new Rectangle(0, 0, 100, 100);
                     final Tooltip tooltip = new Tooltip();
                     tooltip.setText(((TaskCell) cell).getCellDescription());
-                    Tooltip.install(rect, tooltip);
                     cell.setTooltip(tooltip);
+                }
+                else{
+                    cell.setTooltip(null);
                 }
             });
             cell.setOnMouseReleased(event2 -> {
+                TaskCell source = (TaskCell) event2.getSource();
                 if(cell.getText() != null){
                     if(event2.getButton() == MouseButton.SECONDARY){
-                       ContextMenu menu = new TaskContextMenu();
-                       cell.setContextMenu(menu);
-                       menu.show(cell,event2.getScreenX(), event2.getScreenY());
+                        cell.setOnContextMenuRequested(event12 -> taskContextMenu.show(cell, event12.getScreenX(), event12.getScreenY()));
                     }
+                    indexOfTaskCell = source.getIndex();
+                    getToDoElementsList().getSelectionModel().clearSelection();
+                }
+                else{
+                    cell.setOnContextMenuRequested(null);
                 }
             });
             return cell;

@@ -1,5 +1,6 @@
 package kanbanGUI;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.ListCell;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -29,11 +30,12 @@ public class TaskCell extends ListCell<TaskModel> {
             else{
                 rect.setFill(Color.GREEN);
                 setGraphic(rect);
-                setText(item.toString() + " - " + item.getTaskPriority());            }
-
+                setText(item.toString() + " - " + item.getTaskPriority());
+            }
         }
         else{
             setGraphic(null);
+            setText(null);
         }
     }
 }
