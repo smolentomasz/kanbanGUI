@@ -7,7 +7,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class AddTaskController {
-
     public void btClick (ActionEvent event){
         TextField taskTitle = (TextField) MainController.getAddItemScene().lookup("#add_title_label");
         DatePicker taskExpiryDate = (DatePicker) MainController.getAddItemScene().lookup("#add_expiry_picker");

@@ -19,22 +19,51 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class MainController {
+    @FXML
+    public ListView<TaskModel> toDo_list;
+
+    @FXML
+    public ListView<TaskModel> in_progress_list;
+
+    @FXML
+    public ListView<TaskModel> done_list;
     private static ObservableList<TaskModel> toDoElementsListModel = FXCollections.observableArrayList();
+    private static ObservableList<TaskModel> inProgressListModel = FXCollections.observableArrayList();
+    private static ObservableList<TaskModel> doneListModel = FXCollections.observableArrayList();
+    private static ObservableList<TaskModel> actualListModel = FXCollections.observableArrayList();
     private static Stage addElementStage;
-    private static ListView<TaskModel> toDoElementsList;
+    private static Parent editElementRoot;
+    private static TaskModel actualTask;
+    private static int indexOfTaskCell;
     private static Scene addItemScene;
+    private static ListView<TaskModel> actualList;
     private static ContextMenu taskContextMenu;
+    private static ListView<TaskModel> toDoElementsList;
+    private static ListView<TaskModel> inProgressList;
+    private static ListView<TaskModel> doneList;
+
+    public static ListView<TaskModel> getActualList() {
+        return actualList;
+    }
+
+    public static ObservableList<TaskModel> getActualListModel() {
+        return actualListModel;
+    }
+
+    public static TaskModel getActualTask() {
+        return actualTask;
+    }
+
+    public static Parent getEditElementRoot() {
+        return editElementRoot;
+    }
 
     public static int getIndexOfTaskCell() {
         return indexOfTaskCell;
     }
-
-    private static int indexOfTaskCell;
-
-    @FXML
-    public ListView<TaskModel> toDo_list;
 
     public static Scene getAddItemScene() {
         return addItemScene;
@@ -69,36 +98,13 @@ public class MainController {
         addElementStage.initOwner(Main.getPrimaryStage());
         addElementStage.show();
         toDoElementsList = toDo_list;
+        inProgressList = in_progress_list;
+        doneList = done_list;
 
+        editElementRoot = FXMLLoader.load(getClass().getResource("EditTask.fxml"));
         taskContextMenu = TaskContextMenu.createContextMenu();
 
-        toDoElementsList.setCellFactory(list -> {
-            final ListCell<TaskModel> cell = new TaskCell();
-            cell.setOnMouseEntered(event1 -> {
-                if(cell.getText() != null){
-                    final Tooltip tooltip = new Tooltip();
-                    tooltip.setText(((TaskCell) cell).getCellDescription());
-                    cell.setTooltip(tooltip);
-                }
-                else{
-                    cell.setTooltip(null);
-                }
-            });
-            cell.setOnMouseReleased(event2 -> {
-                TaskCell source = (TaskCell) event2.getSource();
-                if(cell.getText() != null){
-                    if(event2.getButton() == MouseButton.SECONDARY){
-                        cell.setOnContextMenuRequested(event12 -> taskContextMenu.show(cell, event12.getScreenX(), event12.getScreenY()));
-                    }
-                    indexOfTaskCell = source.getIndex();
-                    getToDoElementsList().getSelectionModel().clearSelection();
-                }
-                else{
-                    cell.setOnContextMenuRequested(null);
-                }
-            });
-            return cell;
-        });
+        toDoElementsList.setCellFactory(kalbaczek);
 
     }
     public void menuClick(ActionEvent event){
@@ -114,5 +120,68 @@ public class MainController {
             alert.showAndWait();
         }
     }
+    public void toDo_to_inProgress(ActionEvent event){
+        try{
+            inProgressListModel.add(actualTask);
+            toDoElementsListModel.remove(indexOfTaskCell);
+            inProgressList.setItems(inProgressListModel);
+            inProgressList.setCellFactory(kalbaczek);
+            toDoElementsList.refresh();
+        }catch(Exception e){
+            System.out.println("To do list is empty! Error code: " + e);
+        }
 
+    }
+    public void inProgress_to_toDo(ActionEvent event){
+        try{
+        toDoElementsListModel.add(actualTask);
+        inProgressListModel.remove(indexOfTaskCell);
+        toDoElementsList.setItems(toDoElementsListModel);
+        inProgressList.refresh();
+        }catch (Exception e){
+            System.out.println("In progress list is empty! Error code: " + e);
+        }
+    }
+    public void inProgress_to_doneList(ActionEvent event){
+        try {
+            doneListModel.add(actualTask);
+            inProgressListModel.remove(indexOfTaskCell);
+            doneList.setItems(doneListModel);
+            doneList.setCellFactory(kalbaczek);
+            inProgressList.refresh();
+        }catch (Exception e){
+            System.out.println("In progress list is empty! Error code: " + e);
+        }
+    }
+    Callback<ListView<TaskModel>, ListCell<TaskModel>> kalbaczek = new Callback<ListView<TaskModel>, ListCell<TaskModel>>() {
+        @Override
+        public ListCell<TaskModel> call(ListView<TaskModel> list) {
+            final ListCell<TaskModel> cell = new TaskCell();
+            cell.setOnMouseEntered(event1 -> {
+                if (cell.getText() != null) {
+                    final Tooltip tooltip = new Tooltip();
+                    tooltip.setText(((TaskCell) cell).getCellDescription());
+                    cell.setTooltip(tooltip);
+                } else {
+                    cell.setTooltip(null);
+                }
+            });
+            cell.setOnMouseReleased(event2 -> {
+                TaskCell source = (TaskCell) event2.getSource();
+                if (cell.getText() != null) {
+                    if (event2.getButton() == MouseButton.SECONDARY) {
+                        cell.setOnContextMenuRequested(event12 -> taskContextMenu.show(cell, event12.getScreenX(), event12.getScreenY()));
+                    }
+                    actualTask = list.getSelectionModel().getSelectedItem();
+                    actualListModel = list.getItems();
+                    actualList = list;
+                    indexOfTaskCell = source.getIndex();
+                    getToDoElementsList().getSelectionModel().clearSelection();
+                } else {
+                    cell.setOnContextMenuRequested(null);
+                }
+            });
+            return cell;
+        }
+    };
 }

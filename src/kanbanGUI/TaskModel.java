@@ -6,19 +6,41 @@ import javafx.stage.Window;
 
 public class TaskModel extends Window {
     private String taskName;
+    private String taskDescription;
+    private LocalDate expiryDate;
+    private Priority taskPriority;
+
+    public String getTaskName() {
+        return taskName;
+    }
 
     public String getTaskDescription() {
         return taskDescription;
     }
 
-    private String taskDescription;
-    private LocalDate expiryDate;
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
 
     public Priority getTaskPriority() {
         return taskPriority;
     }
 
-    private Priority taskPriority;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+
+    public void setExpiryDate(LocalDate expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    public void setTaskPriority(Priority taskPriority) {
+        this.taskPriority = taskPriority;
+    }
 
     public TaskModel(String taskName, String taskDescription, LocalDate expiryDate, Priority taskPriority) {
         this.taskName = taskName;

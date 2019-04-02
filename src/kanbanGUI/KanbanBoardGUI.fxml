@@ -56,5 +56,8 @@
         </content>
       </ScrollPane>
       <Button id="addNewTask" fx:id="bt_add_new_task" layoutX="306.0" layoutY="367.0" mnemonicParsing="false" onAction="#buttonClick" text="Add new task" />
+      <Button fx:id="toDo_to_progress" layoutX="215.0" layoutY="175.0" mnemonicParsing="false" onAction="#toDo_to_inProgress" prefHeight="25.0" prefWidth="34.0" text="-&gt;" />
+      <Button fx:id="progress_to_ToDo" layoutX="215.0" layoutY="225.0" mnemonicParsing="false" onAction="#inProgress_to_toDo" prefHeight="25.0" prefWidth="34.0" text="&lt;-" />
+      <Button fx:id="progress_to_Done" layoutX="450.0" layoutY="200.0" mnemonicParsing="false" onAction="#inProgress_to_doneList" prefHeight="25.0" prefWidth="35.0" text="-&gt;" />
    </children>
 </AnchorPane>

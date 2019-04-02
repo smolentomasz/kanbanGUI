@@ -6,11 +6,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class TaskCell extends ListCell<TaskModel> {
+    private String cellDescription;
+
     public String getCellDescription() {
         return cellDescription;
     }
 
-    private String cellDescription;
     @Override
     public void updateItem(TaskModel item, boolean empty) {
         super.updateItem(item,empty);
