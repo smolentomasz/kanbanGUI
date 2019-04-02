@@ -1,4 +1,4 @@
-package kanbanGUI;
+package kanbanGUI.models;
 
 import java.time.LocalDate;
 

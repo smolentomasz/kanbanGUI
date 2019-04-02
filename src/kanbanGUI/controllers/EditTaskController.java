@@ -1,4 +1,4 @@
-package kanbanGUI;
+package kanbanGUI.controllers;
 
 import java.io.IOException;
 
@@ -8,6 +8,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import kanbanGUI.models.Priority;
+import kanbanGUI.models.TaskContextMenu;
 
 public class EditTaskController {
     @FXML

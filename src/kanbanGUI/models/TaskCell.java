@@ -1,6 +1,5 @@
-package kanbanGUI;
+package kanbanGUI.models;
 
-import javafx.event.ActionEvent;
 import javafx.scene.control.ListCell;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

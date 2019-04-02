@@ -1,10 +1,12 @@
-package kanbanGUI;
+package kanbanGUI.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import kanbanGUI.models.Priority;
+import kanbanGUI.models.TaskModel;
 
 public class AddTaskController {
     public void btClick (ActionEvent event){

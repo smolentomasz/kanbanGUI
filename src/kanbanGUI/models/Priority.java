@@ -1,4 +1,4 @@
-package kanbanGUI;
+package kanbanGUI.models;
 
 public enum Priority {
     High {

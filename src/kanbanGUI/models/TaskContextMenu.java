@@ -1,14 +1,16 @@
-package kanbanGUI;
+package kanbanGUI.models;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import kanbanGUI.Main;
+import kanbanGUI.controllers.MainController;
 
 public class TaskContextMenu extends ContextMenu {
     private static ContextMenu contextMenu;
@@ -39,15 +41,15 @@ public class TaskContextMenu extends ContextMenu {
             editElementStage.setScene(editItemScene);
 
             ComboBox<Priority> taskPriorityEdit = (ComboBox<Priority>) editItemScene.lookup("#edit_priority_picker");
-            ObservableList<Priority> itemsEdit = FXCollections.observableArrayList();
-            itemsEdit.add(Priority.High);
-            itemsEdit.add(Priority.Normal);
-            itemsEdit.add(Priority.Low);
+            ObservableList<Priority> itemsEdit = MainController.createPriorityList();
+
             taskPriorityEdit.setItems(itemsEdit);
-            taskPriorityEdit.getSelectionModel().selectFirst();
+            taskPriorityEdit.getSelectionModel().selectLast();
 
             editElementStage.initModality(Modality.WINDOW_MODAL);
             editElementStage.initOwner(Main.getPrimaryStage());
+            editElementStage.setResizable(false);
+            editElementStage.getIcons().add(new Image("kanbanGUI/img/test.png"));
             editElementStage.show();
             MainController.getAddElementStage().setScene(MainController.getAddItemScene());
         });
