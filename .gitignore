@@ -88,7 +88,7 @@ modules.xml
 ### Java ###
 # Compiled class file
 *.class
-.src/kanbanGUI/models/KanbanModel
+src/kanbanGUI/models/KanbanModel
 
 # Log file
 *.log
