@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: #321441;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kanbanGUI.controllers.AddTaskController">
+<AnchorPane prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: #123456;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kanbanGUI.controllers.AddTaskController">
    <children>
       <DatePicker fx:id="add_expiry_picker" layoutX="71.0" layoutY="100.0" />
       <ComboBox fx:id="add_priority_picker" layoutX="71.0" layoutY="139.0" prefHeight="25.0" prefWidth="174.0" />

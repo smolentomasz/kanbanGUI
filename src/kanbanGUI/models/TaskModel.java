@@ -1,10 +1,11 @@
 package kanbanGUI.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javafx.stage.Window;
 
-public class TaskModel extends Window {
+public class TaskModel extends Window implements Serializable {
     private String taskName;
     private String taskDescription;
     private LocalDate expiryDate;
@@ -51,5 +52,8 @@ public class TaskModel extends Window {
     @Override
     public String toString(){
         return taskName;
+    }
+    public static LocalDate toLocalDate(String localDateString){
+        return LocalDate.parse(localDateString);
     }
 }

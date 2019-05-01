@@ -13,13 +13,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="400.0" maxWidth="700.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="695.0" style="-fx-background-color: #321441;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kanbanGUI.controllers.MainController">
+<AnchorPane maxHeight="400.0" maxWidth="700.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="695.0" style="-fx-background-color: #123456;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kanbanGUI.controllers.MainController">
    <children>
       <MenuBar layoutX="14.0" layoutY="14.0" maxWidth="716.0" minWidth="695.0" prefHeight="25.0" prefWidth="716.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem fx:id="bt_Close" mnemonicParsing="false" onAction="#menuClick" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuClick" text="Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuClick" text="Open" />
+                  <Menu mnemonicParsing="false" text="Export">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#exportJSON" text="JSON" />
+                        <MenuItem mnemonicParsing="false" onAction="#exportCSV" text="CSV" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Import">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#importJSON" text="JSON" />
+                        <MenuItem mnemonicParsing="false" onAction="#importCSV" text="CSV" />
+                    </items>
+                  </Menu>
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="About">
