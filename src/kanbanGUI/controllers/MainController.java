@@ -180,19 +180,13 @@ public class MainController implements Initializable {
             try {
                 FileReader objectFromFile = new FileReader(filetoImport.getPath());
 
-                int content;
-                StringBuilder jsonOutputBuilder = new StringBuilder();
-                while ((content = objectFromFile.read()) != -1) {
-                    jsonOutputBuilder.append((char)content);
-                }
-                String jsonOutputString = jsonOutputBuilder.toString();
+                JSONParser jsonParser = new JSONParser();
+                Object tmp = jsonParser.parse(objectFromFile);
+                JSONObject mainObject = (JSONObject) tmp;
 
-                JSONObject obj = new Gson().fromJson(jsonOutputString,JSONObject.class);
-
-
-                JSONObject toDoListJSON = new JSONObject((Map) obj.get("toDoList"));
-                JSONObject inProgressListJSON = new JSONObject((Map) obj.get("inProgressList"));
-                JSONObject doneListJSON = new JSONObject((Map) obj.get("doneList"));
+                JSONObject toDoListJSON = new JSONObject((Map) mainObject.get("toDoList"));
+                JSONObject inProgressListJSON = new JSONObject((Map) mainObject.get("inProgressList"));
+                JSONObject doneListJSON = new JSONObject((Map) mainObject.get("doneList"));
 
                 toDoElementsListModel.clear();
                 inProgressListModel.clear();
@@ -205,6 +199,8 @@ public class MainController implements Initializable {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
@@ -452,8 +448,8 @@ public class MainController implements Initializable {
         for(int i=0;i<observableModel.size();i++){
                 JSONObject tmpObject = new JSONObject();
                 tmpObject.put("title",observableModel.get(i).getTaskName());
-                tmpObject.put("expiry",observableModel.get(i).getExpiryDate());
-                tmpObject.put("priority",observableModel.get(i).getTaskPriority());
+                tmpObject.put("expiry",observableModel.get(i).getExpiryDate().toString());
+                tmpObject.put("priority",observableModel.get(i).getTaskPriority().toString());
                 tmpObject.put("description",observableModel.get(i).getTaskDescription());
                 newListObject.put("task"+i,tmpObject);
 
