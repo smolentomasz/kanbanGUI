@@ -349,41 +349,42 @@ public class MainController implements Initializable {
         }
     }
     public void toDo_to_inProgress(ActionEvent event){
-            if(toDoElementsListModel.size() > 0){
-            inProgressListModel.add(actualTask);
-            toDoElementsListModel.remove(indexOfTaskCell);
-            inProgressList.setItems(inProgressListModel);
-            inProgressList.setCellFactory(cellFactioryCallback);
-            toDoElementsList.refresh();
-            }
-            else
-            System.out.println("To do list is empty!");
-
-
+        if(actualTask != null) {
+            if (toDoElementsListModel.size() > 0) {
+                inProgressListModel.add(actualTask);
+                toDoElementsListModel.remove(indexOfTaskCell);
+                inProgressList.setItems(inProgressListModel);
+                inProgressList.setCellFactory(cellFactioryCallback);
+                toDoElementsList.refresh();
+                actualTask = null;
+            } else
+                System.out.println("To do list is empty!");
+        }
     }
     public void inProgress_to_toDo(ActionEvent event){
-
-            if(inProgressListModel.size() > 0) {
+        if(actualTask != null) {
+            if (inProgressListModel.size() > 0) {
                 toDoElementsListModel.add(actualTask);
                 inProgressListModel.remove(indexOfTaskCell);
                 toDoElementsList.setItems(toDoElementsListModel);
                 inProgressList.refresh();
-            }
-            else
-            System.out.println("In progress list is empty!");
-
+                actualTask = null;
+            } else
+                System.out.println("In progress list is empty!");
+        }
     }
     public void inProgress_to_doneList(ActionEvent event){
-        if(inProgressListModel.size() > 0){
-            doneListModel.add(actualTask);
-            inProgressListModel.remove(indexOfTaskCell);
-            doneList.setItems(doneListModel);
-            doneList.setCellFactory(cellFactioryCallback);
-            inProgressList.refresh();
+        if(actualTask != null) {
+            if (inProgressListModel.size() > 0) {
+                doneListModel.add(actualTask);
+                inProgressListModel.remove(indexOfTaskCell);
+                doneList.setItems(doneListModel);
+                doneList.setCellFactory(cellFactioryCallback);
+                inProgressList.refresh();
+                actualTask = null;
+            } else
+                System.out.println("In progress list is empty!");
         }
-        else
-            System.out.println("In progress list is empty!");
-
     }
     private Callback<ListView<TaskModel>, ListCell<TaskModel>> cellFactioryCallback = new Callback<ListView<TaskModel>, ListCell<TaskModel>>() {
         @Override
